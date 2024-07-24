@@ -1,0 +1,327 @@
+<html><head><base href="https://websim.ai" /><title>Email Signature Generator</title><style>
+:root {
+  --primary-color: #df1783;
+  --gradient-start: #ff69b4;
+  --gradient-end: #4169e1;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: var(--primary-color);
+  text-align: center;
+}
+
+form {
+  display: grid;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="color"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+textarea {
+  height: 60px;
+}
+
+input[type="color"] {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+}
+
+button {
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+  font-size: 22px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#signatureForm button[type="submit"] {
+  padding: 20px;
+}
+
+#copyButton {
+  margin-top: 10px;
+  padding: 20px 60px;
+}
+
+#signaturePreview {
+  margin-top: 30px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+#generatedHTML {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+</style></head><body>
+  <h1>Email Signature Generator</h1>
+
+  <form id="signatureForm">
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" required>
+
+    <label for="jobTitle">Job Title:</label>
+    <input type="text" id="jobTitle">
+
+    <label for="department">Department:</label>
+    <input type="text" id="department">
+
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName">
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" required>
+
+    <label for="mainPhone">Main Phone Number:</label>
+    <input type="text" id="mainPhone">
+
+    <label for="mobilePhone">Mobile Phone Number:</label>
+    <input type="text" id="mobilePhone">
+
+    <label for="directPhone">Direct Phone Number:</label>
+    <input type="text" id="directPhone">
+
+    <label for="faxNumber">Fax Number:</label>
+    <input type="text" id="faxNumber">
+
+    <label for="skype">Skype Username:</label>
+    <input type="text" id="skype">
+
+    <label for="address">Company Address:</label>
+    <textarea id="address"></textarea>
+
+    <label for="website">Website URL:</label>
+    <input type="url" id="website">
+
+    <label for="twitter">Twitter URL:</label>
+    <input type="url" id="twitter">
+
+    <label for="linkedin">LinkedIn URL:</label>
+    <input type="url" id="linkedin">
+
+    <label for="facebook">Facebook URL:</label>
+    <input type="url" id="facebook">
+
+    <label for="instagram">Instagram URL:</label>
+    <input type="url" id="instagram">
+
+    <label for="whatsapp">WhatsApp URL:</label>
+    <input type="url" id="whatsapp">
+
+    <label for="tiktok">TikTok URL:</label>
+    <input type="url" id="tiktok">
+
+    <label for="pinterest">Pinterest URL:</label>
+    <input type="url" id="pinterest">
+
+    <label for="youtube">YouTube URL:</label>
+    <input type="url" id="youtube">
+
+    <label for="threads">Threads URL:</label>
+    <input type="url" id="threads">
+
+    <label for="snapchat">Snapchat URL:</label>
+    <input type="url" id="snapchat">
+
+    <label for="tumblr">Tumblr URL:</label>
+    <input type="url" id="tumblr">
+
+    <label for="reddit">Reddit URL:</label>
+    <input type="url" id="reddit">
+
+    <label for="vimeo">Vimeo URL:</label>
+    <input type="url" id="vimeo">
+
+    <label for="telegram">Telegram URL:</label>
+    <input type="url" id="telegram">
+
+    <label for="googlemaps">Google Maps URL:</label>
+    <input type="url" id="googlemaps">
+
+    <label for="logoUrl">Logo Image URL:</label>
+    <input type="url" id="logoUrl">
+
+    <label for="bannerUrl">Banner Image URL:</label>
+    <input type="url" id="bannerUrl">
+
+    <label for="brandColor">Choose Brand Color:</label>
+    <input type="color" id="brandColor" value="#df1783">
+
+    <label for="iconStyle">Icon Style:</label>
+    <select id="iconStyle">
+      <option value="circle" selected>Circle</option>
+      <option value="square">Square</option>
+      <option value="rounded">Rounded Corner</option>
+      <option value="none">No Background</option>
+    </select>
+
+    <button type="submit">Generate Signature</button>
+  </form>
+
+  <h2>Signature Preview:</h2>
+  <div id="signaturePreview"></div>
+
+  <h2>Generated Signature HTML:</h2>
+  <pre id="generatedHTML"></pre>
+  <button id="copyButton">Copy HTML</button>
+
+  <script>
+    document.getElementById('signatureForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const brandColor = document.getElementById('brandColor').value;
+      const iconStyle = document.getElementById('iconStyle').value;
+      
+      const socialIcons = {
+        twitter: 'https://bucket.mlcdn.com/a/3336/3336910/images/a52bc36cbf04a058a2b8305eb50c609b9d2737eb.png',
+        linkedin: 'https://bucket.mlcdn.com/a/3336/3336910/images/ab63260a15fac62334be8a31bc5970e3925367cd.png',
+        facebook: 'https://bucket.mlcdn.com/a/3336/3336910/images/c079345e1d951d32b6c3cbc4d447644983c6a352.png',
+        instagram: 'https://bucket.mlcdn.com/a/3336/3336910/images/8afb144bc899694b5d9a913f97370557d579abfd.png',
+        youtube: 'https://bucket.mlcdn.com/a/3336/3336910/images/080473cd23ae742fc152a520552ab2f438cb1ecd.png',
+        snapchat: 'https://bucket.mlcdn.com/a/3336/3336910/images/04be9bb597e65d1270ed38202cf08e64a05677ae.png',
+        pinterest: 'https://bucket.mlcdn.com/a/3336/3336910/images/d656042ad543916a59ae97d4e66c15d540f7207a.png',
+        tumblr: 'https://bucket.mlcdn.com/a/3336/3336910/images/70306400addca1c9b99a0fccacc3dae02d4e65b1.png',
+        reddit: 'https://bucket.mlcdn.com/a/3336/3336910/images/84a18629af9eb908f7a30fb0c71aa23204488607.png',
+        vimeo: 'https://bucket.mlcdn.com/a/3336/3336910/images/4d90f71eb5c88b51286ae9cf0e28a24c9fa5849c.png',
+        tiktok: 'https://bucket.mlcdn.com/a/3336/3336910/images/3f49d77083d12ab42b0efb00f58f5a9d73300915.png',
+        telegram: 'https://bucket.mlcdn.com/a/3336/3336910/images/21126641161e7c833b155baad9073eb849cf2308.png',
+        whatsapp: 'https://bucket.mlcdn.com/a/3336/3336910/images/a2ad92be229b4c0aa9aba305e78f00ae8a47d3a0.png',
+        skype: 'https://bucket.mlcdn.com/a/3336/3336910/images/edf7d5b597552c06a596bbabdceaede4e02c3ec3.png',
+        googlemaps: 'https://bucket.mlcdn.com/a/3336/3336910/images/b167b183c395e78f98589cc80c7cf6cde49571bb.png',
+        threads: 'https://bucket.mlcdn.com/a/3336/3336910/images/21126641161e7c833b155baad9073eb849cf2308.png'
+      };
+
+      const contactIcons = {
+        email: 'https://bucket.mlcdn.com/a/3336/3336910/images/38c40db18c7dbac8db48106f4cb9762bf467539c.png',
+        phone: 'https://bucket.mlcdn.com/a/3336/3336910/images/7d15f11569b23ea90b47bd0a783af8b869fb0950.png',
+        mobile: 'https://bucket.mlcdn.com/a/3336/3336910/images/c44339bd40884a8785704e6b1ea8443a53d43444.png',
+        direct: 'https://bucket.mlcdn.com/a/3336/3336910/images/774bbf37a92ea5465d11cd597f16f4b179807fe6.png',
+        fax: 'https://bucket.mlcdn.com/a/3336/3336910/images/32295bd19ccab9b2a812d99b1e7a7020b5820f46.png',
+        map: 'https://bucket.mlcdn.com/a/3336/3336910/images/b167b183c395e78f98589cc80c7cf6cde49571bb.png',
+        website: 'https://bucket.mlcdn.com/a/3336/3336910/images/5692583aa62c83616c235cb85f3dcbd33a4e0697.png'
+      };
+      
+      let socialIconsHtml = '';
+      Object.keys(socialIcons).forEach(platform => {
+        const url = document.getElementById(platform).value;
+        if (url) {
+          let iconStyle = '';
+          switch (document.getElementById('iconStyle').value) {
+            case 'circle':
+              iconStyle = 'border-radius: 50%;';
+              break;
+            case 'rounded':
+              iconStyle = 'border-radius: 4px;';
+              break;
+            case 'none':
+              iconStyle = 'background-color: transparent !important;';
+              break;
+            default:
+              iconStyle = '';
+          }
+          socialIconsHtml += `
+            <a href="${url}" target="_blank" style="text-decoration: none; display: inline-block; margin-right: 5px;">
+              <img src="${socialIcons[platform]}" alt="${platform}" width="24" height="24" style="${iconStyle} background-color: ${brandColor};">
+            </a>
+          `;
+        }
+      });
+
+      const logoUrl = document.getElementById('logoUrl').value;
+      const bannerUrl = document.getElementById('bannerUrl').value;
+
+      const signatureHTML = `
+        <table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, sans-serif; color: #333333; font-size: 12px; width: 100%; max-width: 600px;">
+          <tr>
+            ${logoUrl ? `<td style="padding: 0 20px 0 0; vertical-align: middle; border-right: 1px solid #ddd; width: 250px;">
+              <img src="${logoUrl}" alt="Company Logo" style="width: 100%; max-width: 250px; height: auto; object-fit: contain;">
+            </td>` : ''}
+            <td style="vertical-align: middle; padding-left: 20px;">
+              <strong style="color: ${brandColor}; font-size: 16px;">${document.getElementById('fullName').value}</strong><br>
+              ${document.getElementById('jobTitle').value ? `<span style="color: ${brandColor};">${document.getElementById('jobTitle').value}</span><br>` : ''}
+              ${document.getElementById('department').value ? `<span style="color: #666666;">${document.getElementById('department').value}</span><br>` : ''}
+              ${document.getElementById('companyName').value ? `<span style="color: ${brandColor};">${document.getElementById('companyName').value}</span><br>` : ''}
+              ${document.getElementById('email').value ? `<img src="${contactIcons.email}" alt="Email" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <a href="mailto:${document.getElementById('email').value}" style="color: #333333; text-decoration: none;" onmouseover="this.style.color='${brandColor}';" onmouseout="this.style.color='#333333';">${document.getElementById('email').value}</a><br>` : ''}
+              ${document.getElementById('mainPhone').value ? `<img src="${contactIcons.phone}" alt="Phone" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <span style="color: #666666;">${document.getElementById('mainPhone').value}</span><br>` : ''}
+              ${document.getElementById('mobilePhone').value ? `<img src="${contactIcons.mobile}" alt="Mobile" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <span style="color: #666666;">${document.getElementById('mobilePhone').value}</span><br>` : ''}
+              ${document.getElementById('directPhone').value ? `<img src="${contactIcons.direct}" alt="Direct" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <span style="color: #666666;">${document.getElementById('directPhone').value}</span><br>` : ''}
+              ${document.getElementById('faxNumber').value ? `<img src="${contactIcons.fax}" alt="Fax" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <span style="color: #666666;">${document.getElementById('faxNumber').value}</span><br>` : ''}
+              ${document.getElementById('address').value ? `<img src="${contactIcons.map}" alt="Address" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <span style="color: #666666;">${document.getElementById('address').value}</span><br>` : ''}
+              ${document.getElementById('website').value ? `<img src="${contactIcons.website}" alt="Website" width="16" height="16" style="vertical-align: middle; margin-right: 5px;"> <a href="${document.getElementById('website').value}" style="color: #333333; text-decoration: none;" onmouseover="this.style.color='${brandColor}';" onmouseout="this.style.color='#333333';">${document.getElementById('website').value}</a><br>` : ''}
+              ${socialIconsHtml ? `<div style="margin-top: 10px;">
+                ${socialIconsHtml}
+              </div>` : ''}
+            </td>
+          </tr>
+          ${bannerUrl ? `<tr><td colspan="2" style="padding-top: 10px;"><img src="${bannerUrl}" alt="Banner" style="width: 100%; max-width: 600px; height: auto;"></td></tr>` : ''}
+        </table>
+      `;
+      
+      document.getElementById('signaturePreview').innerHTML = signatureHTML;
+      document.getElementById('generatedHTML').textContent = signatureHTML;
+    });
+
+    document.getElementById('copyButton').addEventListener('click', function() {
+      const htmlCode = document.getElementById('generatedHTML').textContent;
+      navigator.clipboard.writeText(htmlCode).then(function() {
+        alert('HTML code copied to clipboard!');
+      }, function(err) {
+        console.error('Could not copy text: ', err);
+      });
+    });
+  </script>
+</body></html>
